@@ -1,5 +1,7 @@
 # SVG 编辑器：架构与开发记录
 
+仓库地址：[https://github.com/Evil-Genus/lab1](https://github.com/Evil-Genus/lab1)
+
 ## 架构方案
 
 TypeScript 严格模式，面向对象，一类一文件。命令和图形通过对象多态执行。

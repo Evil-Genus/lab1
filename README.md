@@ -1,5 +1,7 @@
 # Lab1 Phase 1 — SVG CLI 编辑器
 
+仓库地址：[https://github.com/Evil-Genus/lab1](https://github.com/Evil-Genus/lab1)
+
 TypeScript 面向对象实现，支持六种图形、树结构编辑、SVG 文件读写与 Command 撤销重做。
 
 ## 运行
