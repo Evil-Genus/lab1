@@ -39,7 +39,8 @@ export class SvgCodec implements DocumentCodec {
         id = type + index; reserved.add(id);
         warnings.push('warning: assigned id ' + id + ' to unnamed <' + type + '>');
       }
-      const attrs: Record<string,string> = {};
+      // XML names must remain ordinary keys, including JavaScript prototype names.
+      const attrs: Record<string,string> = Object.create(null);
       for (let i=0;i<element.attributes.length;i++) {
         const attr = element.attributes.item(i)!;
         if (attr.name !== 'id' && attr.name !== 'transform') attrs[attr.name] = attr.value;
