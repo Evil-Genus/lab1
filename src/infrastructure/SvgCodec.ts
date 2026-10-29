@@ -12,7 +12,7 @@ export class SvgCodec implements DocumentCodec {
     if (/<!DOCTYPE|<!ENTITY/i.test(source)) throw new Error('unsupported SVG: DTD/entities');
     const xml = new DOMParser({onError: (_level, message) => { throw new Error('invalid SVG: ' + message); }}).parseFromString(source,'image/svg+xml');
     const root = xml.documentElement;
-    if (!root || root.localName !== 'svg' || root.namespaceURI !== this.namespace) throw new Error('expected SVG root with SVG namespace');
+    if (!root || root.localName !== 'svg' || root.namespaceURI !== this.namespace || root.getAttribute('xmlns') !== this.namespace) throw new Error('expected SVG root with SVG namespace');
     for (let i=0;i<root.attributes.length;i++) {
       const key = root.attributes.item(i)!.name;
       if (!['xmlns','width','height','viewBox'].includes(key)) throw new Error('unsupported SVG root attribute: ' + key);

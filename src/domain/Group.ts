@@ -7,7 +7,8 @@ export class Group extends Shape {
   override get children(): readonly Shape[] { return [...this.nodes]; }
   insert(shape: Shape, index = this.nodes.length): void {
     if (shape === this || this.contains(shape.id)) throw new Error('invalid tree insertion');
-    if (shape instanceof Group && shape.contains(this.id)) throw new Error('cannot move a container into its own descendant: ' + shape.id);
+    const includesThis = (node: Shape): boolean => node === this || node.children.some(includesThis);
+    if (includesThis(shape)) throw new Error('cannot move a container into its own descendant: ' + shape.id);
     this.nodes.splice(index, 0, shape);
   }
   remove(id: string): Shape {
