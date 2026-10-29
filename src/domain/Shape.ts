@@ -39,7 +39,15 @@ export abstract class Shape {
     return target;
   }
   abstract clone(): Shape;
+  geometrySummary(): string {
+    return Object.entries(this.values).map(([k,v]) => k + '=' + v).join(' ');
+  }
+  styleSummary(): string {
+    return Object.entries(this.styles).map(([k,v]) => k + '=' + v).join(' ');
+  }
+  protected treeGeometry(): string { return this.geometrySummary(); }
   summary(): string {
-    return this.label + '  ' + Object.entries(this.attributes()).map(([k,v]) => k + '=' + v).join(' ');
+    const detail = [this.treeGeometry(), this.styleSummary()].filter(Boolean).join(' ');
+    return this.label + (detail ? '  ' + detail : '');
   }
 }

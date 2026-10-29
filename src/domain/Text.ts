@@ -9,5 +9,8 @@ export class Text extends Shape {
     if (attr === 'text') this.content = value; else super.set(attr,value);
   }
   clone(): Text { return this.copyInto(new Text(this.id,0,0,this.content)); }
-  override summary(): string { return super.summary() + ' ' + JSON.stringify(this.content); }
+  protected override treeGeometry(): string {
+    const a = this.attributes();
+    return `(${a.x},${a.y}) ${JSON.stringify(this.content)}`;
+  }
 }

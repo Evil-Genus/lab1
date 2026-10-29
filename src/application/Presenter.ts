@@ -17,8 +17,9 @@ export class Presenter {
   }
   show(document: Document,id: string): string {
     const shape = document.find(id);
-    return shape.label + '  parent=' + document.parentLabel(id) + '\n  ' +
-      Object.entries(shape.attributes()).map(([k,v])=>k + '=' + v).join(' ') +
-      (shape.text === undefined ? '' : '\n  text=' + JSON.stringify(shape.text));
+    const details = [shape.geometrySummary(), shape.styleSummary(),
+      shape.text === undefined ? '' : 'text=' + JSON.stringify(shape.text)].filter(Boolean);
+    return [shape.label + '  parent=' + document.parentLabel(id),
+      ...details.map(line => '  ' + line)].join('\n');
   }
 }
