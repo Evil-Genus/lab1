@@ -58,6 +58,7 @@ export class Document {
     target.insert(group,index);
   }
   ungroup(id: string): void {
+    this.find(id);
     const group = this.container(id), parent = this.parent(id);
     if (parent === this.root) throw new Error('cannot ungroup top-level container: ' + id);
     const index = parent.children.indexOf(group);
@@ -65,6 +66,7 @@ export class Document {
     group.children.forEach((s,i)=> { group.remove(s.id); parent.insert(s,index+i); });
   }
   addto(gid: string, id: string): void {
+    this.find(gid);
     const target = this.container(gid), shape = this.find(id);
     if (shape === target || (shape instanceof Group && shape.contains(gid)))
       throw new Error('cannot move a container into its own descendant: ' + id);
