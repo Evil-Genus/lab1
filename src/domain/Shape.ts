@@ -33,7 +33,11 @@ export abstract class Shape {
       this.values[attr] = n;
     } else if (['fill','stroke','stroke-width'].includes(attr)) {
       XmlCharacters.validate(value);
-      if (attr === 'stroke-width' && Numbers.parse(value) < 0) throw new Error('stroke-width must be non-negative');
+      if (attr === 'stroke-width') {
+        const width = Numbers.parse(value);
+        if (width < 0) throw new Error('stroke-width must be non-negative');
+        value = String(width);
+      }
       this.styles[attr] = value;
     } else throw new Error('unknown attribute: ' + attr);
   }
