@@ -1,9 +1,11 @@
 import { Numbers } from './Numbers.js';
+import { XmlCharacters } from './XmlCharacters.js';
 export abstract class Shape {
   private values: Record<string, number>;
   private styles: Record<string, string> = {};
   protected constructor(readonly id: string, readonly tag: string,
     values: Record<string, number>, private readonly axes: Record<string, 'x' | 'y' | 'size'>) {
+    XmlCharacters.validate(id);
     if (!id || /[\s<>"'&]/u.test(id)) throw new Error('invalid id: ' + id);
     this.values = {};
     for (const [key, value] of Object.entries(values)) this.set(key, String(value));
@@ -30,6 +32,7 @@ export abstract class Shape {
       if (this.axes[attr] === 'size' && n < 0) throw new Error(attr + ' must be non-negative');
       this.values[attr] = n;
     } else if (['fill','stroke','stroke-width'].includes(attr)) {
+      XmlCharacters.validate(value);
       if (attr === 'stroke-width' && Numbers.parse(value) < 0) throw new Error('stroke-width must be non-negative');
       this.styles[attr] = value;
     } else throw new Error('unknown attribute: ' + attr);
